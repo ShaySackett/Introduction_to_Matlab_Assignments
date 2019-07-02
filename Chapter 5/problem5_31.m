@@ -36,4 +36,6 @@ clabel(h) %label the contour lines
 
 %% Part E
 
+surfc(Z) %Generate a combination surface and contour plot of Z
+
 
