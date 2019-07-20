@@ -19,6 +19,8 @@ table_8_10 = [3590.66	3614.17	3622.14	3620.55	3636.91	3604.42	3578.69	3593.57;35
 years = 2008:2015;  %years matrix
 elevation_sum = 0; %elevation_sum_matrix
 yearly_mean = 0; %yearly_mean
+columns = 0;
+rows = 0;
 
 for columns = 1:8  %use nested for loop structure to find the sum, and then find the mean without using find function
     for rows = 1:12
@@ -33,9 +35,9 @@ end
 
 table = [years; yearly_mean];  %Create a table
 
-disp('The average elevation for the 8 years the data was collected is: ')
-disp(elevation_mean)
-disp('')
+disp('The average elevation for the 8 years the data was collected is: ') %display message
+disp(elevation_mean) %disp mean value
+disp('') %display a blank line
 fprintf('The average rainfall for %4.0f was %6.2f feet above sealevel \n',table) %display data in a readable format
 
 %% Part B:
@@ -43,6 +45,8 @@ fprintf('The average rainfall for %4.0f was %6.2f feet above sealevel \n',table)
 %determine how many months from each year exceed the overall average for
 %the 8 year period
 counter = zeros(1,8); %initialize counter vector with prepopulated zero values
+columns = 0;
+rows = 0;
 
 for columns = 1:8  %use nested for loop structure to find the sum, and then find the mean without using find function
     for rows = 1:12
@@ -57,6 +61,64 @@ table_2 = [years; counter];   %make a new table of years vs counts
 fprintf('In %4.0f there were %1.0f months where water level exceeded the overall elevation average \n', table_2)  %display data in a readable format
 
 %% Part C: 
+
+% Create a report that lists the month number and year for all the data
+% values that exceed the average
+year_readout = 0;  %initialize variables
+table_3 = 0;
+columns = 0;        %Clear row and columns just in case
+rows = 0;
+
+disp('The data points that exceed the average are: ')  %display message
+pause(1);                                   %pause for a second to allow user to maybe see first message before it is drowned out by other data
+for columns = 1:8  %use nested for loop structure 
+    for rows = 1:12 
+      if table_8_10(rows,columns) > elevation_mean  %if the value at the table location is greater than the average elevation,  
+          switch columns  %use switch case to evaluate what to print out based on the column position index
+              case 1
+                  year_readout = 2008; % assign a year value for every case/column value
+              case 2
+                  year_readout = 2009;
+              case 3
+                  year_readout = 2010;
+              case 4
+                  year_readout = 2011;
+              case 5
+                   year_readout = 2012;
+              case 6
+                   year_readout = 2013;
+              case 7
+                   year_readout = 2014;
+              otherwise
+                   year_readout = 2015;
+          end
+          table_3 = [rows; year_readout];  %create a table that displays the month in one row and the year in the other       
+          fprintf('Month %.0f year %.0f \n', table_3) %send that table to fprintf and read it out on the screen
+          
+      end
+    end
+end
+
+%% Part D: 
+%Part D says to determine the average elevation of the water for each month
+%for the 8 year period. 
+monthly_sum = 0; %define the variables
+month = 0;  
+
+for rows = 1:12  %create a nested for loop with the rows on the outer loop and the columns on the inner loop
+    for columns = 1:8  %index through each column, this goes through the value for each row
+        monthly_sum = monthly_sum + table_8_10(rows,columns);  %add up all the values in each row as the program indexes
+    end
+    if columns == 8 %if the column index is at the last position in the row
+        monthly_mean = monthly_sum ./8;  %find the mean of all the values
+        table = [rows; monthly_mean];  %create a table that stores the value of the month and the monthly_average
+        fprintf('The average elevation for month %2.0f is % 4.2f \n', table) %print out the average elevation for each month in a neat format
+        monthly_sum = 0; %reset the sum for the month to 0 so that the sum doesn't keep growing as we loop through the program.
+    end
+    end
+    
+
+
 
 
 
