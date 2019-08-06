@@ -2,7 +2,7 @@
 %Problem 13.9, resistance is futile
 
 %Part A: 
-clear, clc
+clear, clc,clf
 R = [10 15 25 40 65 100]; %resistance values
 I = [11.11 8.04 6.03 2.77 1.97 1.51]; %Current values
 
@@ -28,15 +28,25 @@ ylabel('I') %add y axis label
 
 %use polyfit to calculate coefficents of line of regression
 
-coefficients = polyfit(C,I,1);  %apply polyfit to find coefficients, slope of the line is the applied voltage
+coefficients = polyfit(C,I,1)  %apply polyfit to find coefficients, slope of the line is the applied voltage
 
-v = coefficients(1); %find voltage 
+%v = coefficients(1); %find voltage 
 
 %% Part D: 
 
 %Use polyval to find current values base on resistors used
 
-current = polyval(v, R)  % calculate current for each resistor value at the applied voltage.
+%current = polyval(polyfit(C,I,1), R)  % calculate current for each resistor value, polyfit give us our array of coefficents, R is the x axis
+
+plot(1./[10:5:100],polyval(polyfit(C,I,1),1./[10:5:100]))
+hold on 
+plot(1./R,I,'or')
+
+%% Part E: 
+
+%find applied voltage using left division
+
+applied_voltage = I\'R'  
 
 
 
