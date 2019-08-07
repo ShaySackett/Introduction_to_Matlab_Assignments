@@ -22,7 +22,7 @@ function varargout = Graphing_GUI(varargin)
 
 % Edit the above text to modify the response to help Graphing_GUI
 
-% Last Modified by GUIDE v2.5 06-Aug-2019 23:01:12
+% Last Modified by GUIDE v2.5 07-Aug-2019 14:04:29
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -82,6 +82,7 @@ function x_button_Callback(hObject, eventdata, handles)
 handles.x_button_state = 1;
 handles.y_button_state = 0;
 handles.z_button_state = 0;
+%handles.data = peaks(100);
 guidata(hObject,handles);
 
 % --- Executes on button press in y_button.
@@ -93,6 +94,7 @@ function y_button_Callback(hObject, eventdata, handles)
 handles.x_button_state = 0;
 handles.y_button_state = 1;
 handles.z_button_state = 0;
+%handles.data = magic(10);
 guidata(hObject,handles);
 
 
@@ -105,6 +107,7 @@ function z_button_Callback(hObject, eventdata, handles)
 handles.x_button_state = 0;
 handles.y_button_state = 0;
 handles.z_button_state = 1;
+%handles.data = flipud(peaks(100));
 guidata(hObject,handles);
 
 
@@ -116,8 +119,9 @@ function surface_plot_button_Callback(hObject, eventdata, handles)
 % Hint: get(hObject,'Value') returns toggle state of surface_plot_button
 handles.s_plot_button_state = 1;
 handles.m_plot_button_state = 0;
-handles.c_plot_button_state = 1;
+handles.c_plot_button_state = 0;
 guidata(hObject,handles);
+%surf(handles.data)
 
 
 % --- Executes on button press in mesh_plot_button.
@@ -130,6 +134,8 @@ handles.s_plot_button_state = 0;
 handles.m_plot_button_state = 1;
 handles.c_plot_button_state = 0;
 guidata(hObject,handles);
+%mesh(handles.data)
+
 
 
 
@@ -143,3 +149,38 @@ handles.s_plot_button_state = 0;
 handles.m_plot_button_state = 0;
 handles.c_plot_button_state = 1;
 guidata(hObject,handles);
+%contour(handles.data)
+
+
+% --- Executes on button press in plot_button.
+function plot_button_Callback(hObject, eventdata, handles)
+% hObject    handle to plot_button (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+if handles.x_button_state == 1
+     if handles.s_plot_button_state == 1
+         surf(peaks(100))
+     elseif handles.m_plot_button_state == 1
+         mesh(peaks(100))
+     elseif handles.c_plot_button_state == 1
+         contour(peaks(100))
+     end
+elseif handles.y_button_state == 1 
+    if handles.s_plot_button_state == 1
+         surf(magic(10))
+     elseif handles.m_plot_button_state == 1
+         mesh(magic(10))
+     elseif handles.c_plot_button_state == 1
+         contour(magic(10))
+    end
+elseif  handles.z_button_state == 1
+    if handles.s_plot_button_state == 1
+         surf(flipud(peaks(10)))
+     elseif handles.m_plot_button_state == 1
+         mesh(flipud(peaks(10)))
+     elseif handles.c_plot_button_state == 1
+         contour(flipud(peaks(10)))
+    end
+end
+    
+     
